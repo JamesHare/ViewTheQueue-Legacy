@@ -1,49 +1,67 @@
 package com.jamesmhare.viewthequeue.model;
 
 /**
- * Serves as an abstract class for a Restaurant object.
+ * Serves as a class for a Restaurant object.
  */
-abstract class Restaurant {
+public class Restaurant {
 
-    private String name;
-    private String description;
-    private String area;
-    private String operationStatus;
-    private String openingTime;
-    private String closingTime;
-    private boolean servesVegetarian;
-    private boolean servesVegan;
+    public String restaurantName;
+    public String description;
+    public String parkName;
+    public String area;
+    public String operationStatus;
+    public String openingTime;
+    public String closingTime;
+    public boolean servesVegetarian;
+    public boolean servesVegan;
 
-    private final void update() {
-        updateDescription();
-        updateArea();
-        updateOperationStatus();
-        updateOpeningTime();
-        updateClosingTime();
-        updateServesVegetarian();
-        updateServesVegan();
+    public Restaurant(String restaurantName) {
+        this.restaurantName = restaurantName;
+        retrieveAttributes();
     }
 
-    abstract void updateDescription();
+    private void retrieveAttributes() {
 
-    abstract void updateArea();
+    }
 
-    abstract void updateOperationStatus();
+    private void setDescription(String description) {
+        this.description = description;
+    }
 
-    abstract void updateOpeningTime();
+    private void setParkName(String parkName) {
+        this.parkName = parkName;
+    }
 
-    abstract void updateClosingTime();
+    private void setArea(String area) {
+        this.area = area;
+    }
 
-    abstract void updateServesVegetarian();
+    private void setOperationStatus(String operationStatus) {
+        this.operationStatus = operationStatus;
+    }
 
-    abstract void updateServesVegan();
+    private void setOpeningTime(String openingTime) {
+        this.openingTime = openingTime;
+    }
+
+    private void setClosingTime(String closingTime) {
+        this.closingTime = closingTime;
+    }
+
+    private void setServesVegetarian(boolean servesVegetarian) {
+        this.servesVegetarian = servesVegetarian;
+    }
+
+    private void setServesVegan(boolean servesVegan) {
+        this.servesVegan = servesVegan;
+    }
 
     /**
      * Returns the name of the Restaurant.
      * @return String - the name of the Restaurant.
      */
-    public String getName() {
-        return name;
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
     /**
@@ -52,6 +70,14 @@ abstract class Restaurant {
      */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * Returns the name of the Theme Park that the Restaurant belongs to.
+     * @return String - the name of the Theme Park that the Restaurant belongs to.
+     */
+    public String getParkName() {
+        return parkName;
     }
 
     /**

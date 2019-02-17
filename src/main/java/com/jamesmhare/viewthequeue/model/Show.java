@@ -3,42 +3,62 @@ package com.jamesmhare.viewthequeue.model;
 import java.util.List;
 
 /**
- * Serves as an abstract class for a Show object.
+ * Serves as a class for a Show object.
  */
-abstract class Show {
+public class Show {
 
-    private String name;
-    private String description;
-    private String area;
-    private String operationStatus;
-    private boolean isWheelchairAccessible;
-    private boolean hasExpressLine;
-    private List<String> showTimes;
+    public String showName;
+    public String description;
+    public String parkName;
+    public String area;
+    public String operationStatus;
+    public boolean isWheelchairAccessible;
+    public boolean hasExpressLine;
+    public List<String> showTimes;
 
-    private final void update() {
-        updateDescription();
-        updateOperationStatus();
-        updateIsWheelchairAccessible();
-        updateHasExpressLine();
-        updateShowTimes();
+    public Show(String showName) {
+        this.showName = showName;
+        retrieveAttributes();
     }
 
-    abstract void updateDescription();
+    private void retrieveAttributes() {
 
-    abstract void updateOperationStatus();
+    }
 
-    abstract void updateIsWheelchairAccessible();
+    private void setDescription(String description) {
+        this.description = description;
+    }
 
-    abstract void updateHasExpressLine();
+    private void setParkName(String parkName) {
+        this.parkName = parkName;
+    }
 
-    abstract void updateShowTimes();
+    private void setArea(String area) {
+        this.area = area;
+    }
+
+    private void setOperationStatus(String operationStatus) {
+        this.operationStatus = operationStatus;
+    }
+
+    private void setWheelchairAccessible(boolean wheelchairAccessible) {
+        isWheelchairAccessible = wheelchairAccessible;
+    }
+
+    private void setHasExpressLine(boolean hasExpressLine) {
+        this.hasExpressLine = hasExpressLine;
+    }
+
+    private void setShowTimes(List<String> showTimes) {
+        this.showTimes = showTimes;
+    }
 
     /**
      * Returns the name of the Show.
      * @return String - the name of the Show.
      */
-    public String getName() {
-        return name;
+    public String getShowName() {
+        return showName;
     }
 
     /**
@@ -47,6 +67,14 @@ abstract class Show {
      */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * Returns the park name that the Show belongs to.
+     * @return String - the park name that the Show belongs to.
+     */
+    public String getParkName() {
+        return parkName;
     }
 
     /**

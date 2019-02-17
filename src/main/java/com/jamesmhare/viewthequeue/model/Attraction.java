@@ -1,65 +1,87 @@
 package com.jamesmhare.viewthequeue.model;
 
 /**
- * Serves as an abstract class for a Attraction object.
+ * Serves as a class for an Attraction object.
  */
-abstract class Attraction {
+public class Attraction {
 
-    private String name;
-    private String description;
-    private String area;
-    private String operationStatus;
-    private String openingTime;
-    private String closingTime;
-    private String waitTime;
-    private int maxHeightRestrictionInches;
-    private int minHeightRestrictionInches;
-    private boolean isWheelchairAccessible;
-    private boolean hasExpressLine;
-    private boolean hasSingleRider;
+    public String attractionName;
+    public String description;
+    public String parkName;
+    public String area;
+    public String operationStatus;
+    public String openingTime;
+    public String closingTime;
+    public String waitTime;
+    public int maxHeightRestrictionInches;
+    public int minHeightRestrictionInches;
+    public boolean isWheelchairAccessible;
+    public boolean hasExpressLine;
+    public boolean hasSingleRider;
 
-    private final void update() {
-        updateDescription();
-        updateOperationStatus();
-        updateArea();
-        updateOpeningTime();
-        updateClosingTime();
-        updateWaitTime();
-        updateMaxHeightRestrictionInches();
-        updateMinHeightRestrictionInches();
-        updateIsWheelchairAccessible();
-        updateHasExpressLine();
-        updateHasSingleRider();
+    public Attraction(String attractionName) {
+        this.attractionName = attractionName;
+        retrieveAttributes();
     }
 
-    abstract void updateDescription();
+    private void retrieveAttributes() {
 
-    abstract void updateOperationStatus();
+    }
 
-    abstract void updateArea();
+    private void setDescription(String description) {
+        this.description = description;
+    }
 
-    abstract void updateOpeningTime();
+    private void setParkName(String parkName) {
+        this.parkName = parkName;
+    }
 
-    abstract void updateClosingTime();
+    private void setArea(String area) {
+        this.area = area;
+    }
 
-    abstract void updateWaitTime();
+    private void setOperationStatus(String operationStatus) {
+        this.operationStatus = operationStatus;
+    }
 
-    abstract void updateMaxHeightRestrictionInches();
+    private void setOpeningTime(String openingTime) {
+        this.openingTime = openingTime;
+    }
 
-    abstract void updateMinHeightRestrictionInches();
+    private void setClosingTime(String closingTime) {
+        this.closingTime = closingTime;
+    }
 
-    abstract void updateIsWheelchairAccessible();
+    private void setWaitTime(String waitTime) {
+        this.waitTime = waitTime;
+    }
 
-    abstract void updateHasExpressLine();
+    private void setMaxHeightRestrictionInches(int maxHeightRestrictionInches) {
+        this.maxHeightRestrictionInches = maxHeightRestrictionInches;
+    }
 
-    abstract void updateHasSingleRider();
+    private void setMinHeightRestrictionInches(int minHeightRestrictionInches) {
+        this.minHeightRestrictionInches = minHeightRestrictionInches;
+    }
+
+    private void setWheelchairAccessible(boolean wheelchairAccessible) {
+        isWheelchairAccessible = wheelchairAccessible;
+    }
+
+    private void setHasExpressLine(boolean hasExpressLine) {
+        this.hasExpressLine = hasExpressLine;
+    }
+
+    private void setHasSingleRider(boolean hasSingleRider) {
+        this.hasSingleRider = hasSingleRider;
+    }
 
     /**
      * Returns the name of the Attraction.
      * @return String - the name of the Attraction.
      */
-    public String getName() {
-        return name;
+    public String getAttractionName() {
+        return attractionName;
     }
 
     /**
@@ -68,6 +90,14 @@ abstract class Attraction {
      */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * Returns the name of the Theme Park that the Attraction belongs to.
+     * @return String - the name of the Theme Park that the Attraction belongs to.
+     */
+    public String getParkName() {
+        return parkName;
     }
 
     /**

@@ -3,49 +3,62 @@ package com.jamesmhare.viewthequeue.model;
 import java.util.List;
 
 /**
- * Serves as an abstract class for a Theme Park object.
+ * Serves as a class for a Theme Park object.
  */
-abstract class ThemePark {
+public class ThemePark {
 
-    private String name;
-    private String description;
-    private String operationStatus;
-    private String openingTime;
-    private String closingTime;
-    private List<Attraction> attractions;
-    private List<Show> shows;
-    private List<Restaurant> restaurants;
+    public String parkName;
+    public String description;
+    public String operationStatus;
+    public String openingTime;
+    public String closingTime;
+    public List<Attraction> attractions;
+    public List<Show> shows;
+    public List<Restaurant> restaurants;
 
-    private final void update() {
-        updateDescription();
-        updateOperationStatus();
-        updateOpeningTime();
-        updateClosingTime();
-        updateAttractions();
-        updateShows();
-        updateRestaurants();
+    public ThemePark(String parkName) {
+        this.parkName = parkName;
+        retrieveAttributes();
     }
 
-    abstract void updateDescription();
+    private void retrieveAttributes() {
 
-    abstract void updateOperationStatus();
+    }
 
-    abstract void updateOpeningTime();
+    private void setDescription(String description) {
+        this.description = description;
+    }
 
-    abstract void updateClosingTime();
+    private void setOperationStatus(String operationStatus) {
+        this.operationStatus = operationStatus;
+    }
 
-    abstract void updateAttractions();
+    private void setOpeningTime(String openingTime) {
+        this.openingTime = openingTime;
+    }
 
-    abstract void updateShows();
+    private void setClosingTime(String closingTime) {
+        this.closingTime = closingTime;
+    }
 
-    abstract void updateRestaurants();
+    private void setAttractions(List<Attraction> attractions) {
+        this.attractions = attractions;
+    }
+
+    private void setShows(List<Show> shows) {
+        this.shows = shows;
+    }
+
+    private void setRestaurants(List<Restaurant> restaurants) {
+        this.restaurants = restaurants;
+    }
 
     /**
      * Returns the name of the Theme Park.
      * @return String - the name of the Theme Park.
      */
-    public final String getName() {
-        return name;
+    public final String getParkName() {
+        return parkName;
     }
 
     /**
@@ -86,5 +99,21 @@ abstract class ThemePark {
      */
     public final List<Attraction> getAttractions() {
         return attractions;
+    }
+
+    /**
+     * Returns the show information of the Theme Park.
+     * @return String - the show information of the Theme Park.
+     */
+    public List<Show> getShows() {
+        return shows;
+    }
+
+    /**
+     * Returns the restaurant information of the Theme Park.
+     * @return String - the restaurant information of the Theme Park.
+     */
+    public List<Restaurant> getRestaurants() {
+        return restaurants;
     }
 }
