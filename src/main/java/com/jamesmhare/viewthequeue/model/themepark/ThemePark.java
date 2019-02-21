@@ -1,55 +1,84 @@
-package com.jamesmhare.viewthequeue.model;
+package com.jamesmhare.viewthequeue.model.themepark;
+
+import com.jamesmhare.viewthequeue.model.attraction.Attraction;
+import com.jamesmhare.viewthequeue.model.restaurant.Restaurant;
+import com.jamesmhare.viewthequeue.model.show.Show;
 
 import java.util.List;
 
 /**
- * Serves as a class for a Theme Park object.
+ * Serves as a class for a Theme Park POJO.
  */
 public class ThemePark {
 
-    public String parkName;
-    public String description;
-    public String operationStatus;
-    public String openingTime;
-    public String closingTime;
-    public List<Attraction> attractions;
-    public List<Show> shows;
-    public List<Restaurant> restaurants;
+    private String parkName, description, operationStatus, openingTime, closingTime;
+    private List<Attraction> attractions;
+    private List<Show> shows;
+    private List<Restaurant> restaurants;
 
-    public ThemePark(String parkName) {
+    public ThemePark() {}
+
+    /**
+     * Sets the name of the Theme Park.
+     * @param parkName the name of the Theme Park.
+     */
+    public void setParkName(String parkName) {
         this.parkName = parkName;
-        retrieveAttributes();
     }
 
-    private void retrieveAttributes() {
-
-    }
-
-    private void setDescription(String description) {
+    /**
+     * Sets the description of the Theme Park.
+     * @param description the description of the Theme Park.
+     */
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    private void setOperationStatus(String operationStatus) {
+    /**
+     * Sets the operation status of the Theme Park.
+     * @param operationStatus the operation status of the Theme Park.
+     */
+    public void setOperationStatus(String operationStatus) {
         this.operationStatus = operationStatus;
     }
 
-    private void setOpeningTime(String openingTime) {
+    /**
+     * Sets the opening time of the Theme Park.
+     * @param openingTime the opening time of the Theme Park.
+     */
+    public void setOpeningTime(String openingTime) {
         this.openingTime = openingTime;
     }
 
-    private void setClosingTime(String closingTime) {
+    /**
+     * Sets the closing time of the Theme Park.
+     * @param closingTime the closing time of the Theme Park.
+     */
+    public void setClosingTime(String closingTime) {
         this.closingTime = closingTime;
     }
 
-    private void setAttractions(List<Attraction> attractions) {
+    /**
+     * Sets the attractions of the Theme Park.
+     * @param attractions the attractions of the Theme Park.
+     */
+    public void setAttractions(List<Attraction> attractions) {
         this.attractions = attractions;
     }
 
-    private void setShows(List<Show> shows) {
+    /**
+     * Sets the shows of the Theme Park.
+     * @param shows the shows of the Theme Park.
+     */
+    public void setShows(List<Show> shows) {
         this.shows = shows;
     }
 
-    private void setRestaurants(List<Restaurant> restaurants) {
+    /**
+     * Sets the restaurants of the Theme Park.
+     * @param restaurants the restaurants of the Theme Park.
+     */
+    public void setRestaurants(List<Restaurant> restaurants) {
         this.restaurants = restaurants;
     }
 

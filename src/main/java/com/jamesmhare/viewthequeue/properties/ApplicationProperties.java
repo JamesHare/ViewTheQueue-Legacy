@@ -22,11 +22,11 @@ public class ApplicationProperties {
     /**
      * Returns the value associated with the given key from the properties file.
      *
-     * @param key = A {@link String} specifying the key.
+     * @param key - A {@link String} specifying the key.
      * @return the value associated with the key.
      */
     public String getProperty(String key) {
-        StringBuilder value = new StringBuilder("");
+        StringBuilder value = new StringBuilder();
         try {
             input = new FileInputStream("src/main/resources/properties/config.properties");
             properties.load(input);

@@ -1,32 +1,25 @@
-package com.jamesmhare.viewthequeue.model.connection.mysql;
+package com.jamesmhare.viewthequeue.model.connection.proxies.mysql;
 
 import com.ibatis.common.jdbc.ScriptRunner;
+import com.jamesmhare.viewthequeue.model.connection.proxies.ConnectionProxy;
 import com.jamesmhare.viewthequeue.properties.ApplicationProperties;
-import org.apache.commons.io.IOUtils;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.*;
 
 /**
  * Serves as a class to manage a connection to a MySQL instance.
  */
-public class ConnectionProxy {
+public class MySQLConnectionProxy implements ConnectionProxy {
 
     private ApplicationProperties properties;
     private Connection connection;
 
-    private String connectionURL;
-    private String user;
-    private String password;
-    private String databaseName;
+    private String connectionURL, user, password, databaseName;
 
-    public ConnectionProxy() {
+    public MySQLConnectionProxy() {
         initializeProperties();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -37,19 +30,19 @@ public class ConnectionProxy {
     }
 
     /**
-     * Initializes the View The Queue schema and inserts initial values.
+     * {@inheritDoc}
      */
-    public void initializeDatabase() {
+    public void runDatabaseScript(String filePath) {
         try {
             ScriptRunner scriptRunner = new ScriptRunner(connection, false, true);
-            scriptRunner.runScript(new BufferedReader(new FileReader("src/main/resources/setup/SQLScripts/ViewTheQueueDBInit.sql")));
+            scriptRunner.runScript(new BufferedReader(new FileReader(filePath)));
         } catch (SQLException | IOException exception) {
             System.out.println(exception.getMessage());
         }
     }
 
     /**
-     * Closes the connection to the database.
+     * {@inheritDoc}
      */
     public void closeConnection() {
         try {
@@ -60,8 +53,21 @@ public class ConnectionProxy {
     }
 
     /**
-     * Determines if the View the Queue database has been initialized.
-     * @return true if it has, false if it has not.
+     * {@inheritDoc}
+     */
+    public PreparedStatement getPreparedStatement(String pathToSQLFile) throws IOException, SQLException {
+        return connection.prepareStatement(new String(Files.readAllBytes(Paths.get(pathToSQLFile))));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public PreparedStatement getPreparedStatement(String pathToSQLFile, String ammendment) throws IOException, SQLException {
+        return connection.prepareStatement(new String(Files.readAllBytes(Paths.get(pathToSQLFile))) + " " + ammendment);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public boolean databaseExists() {
         boolean databaseExists = false;
@@ -84,15 +90,5 @@ public class ConnectionProxy {
         user = properties.getProperty("DBUser");
         password = properties.getProperty("DBPassword");
         databaseName = properties.getProperty("DBName");
-    }
-
-    private String getSetupQuery() {
-        StringBuilder query = new StringBuilder();
-        try{
-            query.append(IOUtils.toString(new FileInputStream("src/main/resources/setup/SQLScripts/ViewTheQueueDBInit.sql")));
-        } catch (IOException exception) {
-            System.out.println(exception.getMessage());
-        }
-        return query.toString();
     }
 }

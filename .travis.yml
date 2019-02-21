@@ -1,6 +1,14 @@
 language: java
 os:
   - linux
-  - osx
-
+services:
+  - mysql
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+before_script:
+  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('athena') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
 script: mvn clean install
