@@ -2,9 +2,9 @@ package com.jamesmhare.viewthequeue.model.connection.retrievers.mysql;
 
 import com.jamesmhare.viewthequeue.model.attraction.Attraction;
 import com.jamesmhare.viewthequeue.model.connection.proxies.mysql.MySQLConnectionProxy;
+import com.jamesmhare.viewthequeue.model.connection.qualifiers.AttractionQualifier;
 import com.jamesmhare.viewthequeue.model.connection.retrievers.AttractionRetriever;
 
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,195 +21,56 @@ public class MySQLAttractionRetriever implements AttractionRetriever {
     /**
      * {@inheritDoc}
      */
-    public List<Attraction> searchAttractionByName(String attractionName) {
+    public List<Attraction> searchAttractions(AttractionQualifier attractionQualifier) {
         MySQLConnectionProxy conn = new MySQLConnectionProxy();
         List<Attraction> attractions = new ArrayList<>();
+        String query = buildStatement(attractionQualifier);
         try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveAttraction.sql", "WHERE attraction_name = ?");
-            stmt.setString(1, attractionName);
+            PreparedStatement stmt = conn.getConnection().prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 processRow(rs, attractions);
             }
-        } catch (IOException | SQLException exception) {
+        } catch (SQLException exception) {
             System.out.println(exception.getMessage());
         } finally {
             conn.closeConnection();
-        }
-        if (attractions.size() == 0) {
-            System.out.println("Could not retrieve an entry from the database given the attraction name: " + attractionName);
-        } else if (attractions.size() > 1) {
-            attractions.clear();
-            System.out.println("More than one entry was retrieved from the database given the attraction name: " + attractionName);
         }
         return attractions;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public List<Attraction> searchAttractionByThemeParkName(String parkName) {
-        MySQLConnectionProxy conn = new MySQLConnectionProxy();
-        List<Attraction> attractions = new ArrayList<>();
-        try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveAttraction.sql", "WHERE park_name = ?");
-            stmt.setString(1, parkName);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                processRow(rs, attractions);
-            }
-        } catch (IOException | SQLException exception) {
-            System.out.println(exception.getMessage());
-        } finally {
-            conn.closeConnection();
+    private String buildStatement(AttractionQualifier attractionQualifier) {
+        StringBuilder query = new StringBuilder("SELECT * FROM ViewTheQueueDB.Attractions");
+        if (attractionQualifier.getAttractionName() == null) {
+            query.append(" WHERE attraction_name LIKE '%'");
+        } else {
+            query.append(" WHERE attraction_name = '" + attractionQualifier.getAttractionName() + "'");
         }
-        if (attractions.size() == 0) {
-            System.out.println("Could not retrieve an entry from the database given the Theme Park name: " + parkName);
+        if (attractionQualifier.getParkName() == null) {
+            query.append(" AND park_name LIKE '%'");
+        } else {
+            query.append(" AND park_name = '" + attractionQualifier.getParkName() + "'");
         }
-        return attractions;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List<Attraction> searchAttractionByArea(String area) {
-        MySQLConnectionProxy conn = new MySQLConnectionProxy();
-        List<Attraction> attractions = new ArrayList<>();
-        try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveAttraction.sql", "WHERE area = ?");
-            stmt.setString(1, area);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                processRow(rs, attractions);
-            }
-        } catch (IOException | SQLException exception) {
-            System.out.println(exception.getMessage());
-        } finally {
-            conn.closeConnection();
+        if (attractionQualifier.getArea() == null) {
+            query.append(" AND area LIKE '%'");
+        } else {
+            query.append(" AND area = '" + attractionQualifier.getArea() + "'");
         }
-        if (attractions.size() == 0) {
-            System.out.println("Could not retrieve an entry from the database given the area name: " + area);
+        if (attractionQualifier.getOperationStatus() == null) {
+            query.append(" AND operation_status LIKE '%'");
+        } else {
+            query.append(" AND operation_status = '" + attractionQualifier.getOperationStatus() + "'");
         }
-        return attractions;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List<Attraction> searchAttractionByOperationStatus(String operationStatus) {
-        MySQLConnectionProxy conn = new MySQLConnectionProxy();
-        List<Attraction> attractions = new ArrayList<>();
-        try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveAttraction.sql", "WHERE operation_status = ?");
-            stmt.setString(1, operationStatus);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                processRow(rs, attractions);
-            }
-        } catch (IOException | SQLException exception) {
-            System.out.println(exception.getMessage());
-        } finally {
-            conn.closeConnection();
+        if (attractionQualifier.isWheelchairAccessible() != null) {
+            query.append(" AND is_wheelchair_accessible = " + attractionQualifier.isWheelchairAccessible());
         }
-        if (attractions.size() == 0) {
-            System.out.println("Could not retrieve an entry from the database given the operation status: " + operationStatus);
+        if (attractionQualifier.isExpressLine() != null) {
+            query.append(" AND has_express_line = " + attractionQualifier.isExpressLine());
         }
-        return attractions;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List<Attraction> searchAttractionByWheelchairAccessibility(boolean wheelchairAccessible) {
-        MySQLConnectionProxy conn = new MySQLConnectionProxy();
-        List<Attraction> attractions = new ArrayList<>();
-        try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveAttraction.sql", "WHERE is_wheelchair_accessible = ?");
-            stmt.setBoolean(1, wheelchairAccessible);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                processRow(rs, attractions);
-            }
-        } catch (IOException | SQLException exception) {
-            System.out.println(exception.getMessage());
-        } finally {
-            conn.closeConnection();
+        if (attractionQualifier.isSingleRider() != null) {
+            query.append(" AND has_single_rider = " + attractionQualifier.isSingleRider());
         }
-        if (attractions.size() == 0) {
-            System.out.println("Could not retrieve an entry from the database given the wheelchair access: " + wheelchairAccessible);
-        }
-        return attractions;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List<Attraction> searchAttractionByExpressLine(boolean hasExpressLine) {
-        MySQLConnectionProxy conn = new MySQLConnectionProxy();
-        List<Attraction> attractions = new ArrayList<>();
-        try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveAttraction.sql", "WHERE has_express_line = ?");
-            stmt.setBoolean(1, hasExpressLine);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                processRow(rs, attractions);
-            }
-        } catch (IOException | SQLException exception) {
-            System.out.println(exception.getMessage());
-        } finally {
-            conn.closeConnection();
-        }
-        if (attractions.size() == 0) {
-            System.out.println("Could not retrieve an entry from the database given the express line availability: " + hasExpressLine);
-        }
-        return attractions;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List<Attraction> searchAttractionBySingleRiderLine(boolean hasSingleRiderLine) {
-        MySQLConnectionProxy conn = new MySQLConnectionProxy();
-        List<Attraction> attractions = new ArrayList<>();
-        try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveAttraction.sql", "WHERE has_single_rider = ?");
-            stmt.setBoolean(1, hasSingleRiderLine);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                processRow(rs, attractions);
-            }
-        } catch (IOException | SQLException exception) {
-            System.out.println(exception.getMessage());
-        } finally {
-            conn.closeConnection();
-        }
-        if (attractions.size() == 0) {
-            System.out.println("Could not retrieve an entry from the database given the single rider line availability: " + hasSingleRiderLine);
-        }
-        return attractions;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List<Attraction> retrieveAllAttractions() {
-        MySQLConnectionProxy conn = new MySQLConnectionProxy();
-        List<Attraction> attractions = new ArrayList<>();
-        try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveAttraction.sql");
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                processRow(rs, attractions);
-            }
-        } catch (IOException | SQLException exception) {
-            System.out.println(exception.getMessage());
-        } finally {
-            conn.closeConnection();
-        }
-        if (attractions.size() == 0) {
-            System.out.println("No attractions found.");
-        }
-        return attractions;
+        return query.toString();
     }
 
     private void processRow(ResultSet rs, List<Attraction> attractions) {

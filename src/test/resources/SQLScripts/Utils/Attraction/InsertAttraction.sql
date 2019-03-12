@@ -1,2 +1,2 @@
-INSERT INTO ViewTheQueueDB.attractions VALUES
+INSERT INTO ViewTheQueueDB.Attractions VALUES
     (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);

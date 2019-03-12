@@ -8,83 +8,130 @@ public class Restaurant {
     private String restaurantName, description, parkName, area, operationStatus, openingTime, closingTime;
     private boolean servesVegetarian, servesVegan;
 
-    public Restaurant() {}
-
-    /**
-     * Sets the name of the restaurant.
-     * @param restaurantName the name of the restaurant.
-     */
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
+    private Restaurant(Builder builder) {
+        this.restaurantName = builder.restaurantName;
+        this.description = builder.description;
+        this.parkName = builder.parkName;
+        this.area = builder.area;
+        this.operationStatus = builder.operationStatus;
+        this.openingTime = builder.openingTime;
+        this.closingTime = builder.closingTime;
+        this.servesVegetarian = builder.servesVegetarian;
+        this.servesVegan = builder.servesVegan;
     }
 
     /**
-     * Sets the description of the restaurant.
-     * @param description the description of the restaurant.
+     * Serves as a static builder class to build a Restaurant POJO.
      */
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public static class Builder {
 
-    /**
-     * Sets the name of the Theme Park that the restaurant belongs to.
-     * @param parkName the name of the Theme Park that the restaurant belongs to.
-     */
-    public void setParkName(String parkName) {
-        this.parkName = parkName;
-    }
+        private String restaurantName, description, parkName, area, operationStatus, openingTime, closingTime;
+        private boolean servesVegetarian, servesVegan;
 
-    /**
-     * Sets the name of the area that the restaurant belongs to.
-     * @param area the name of the area that the restaurant belongs to.
-     */
-    public void setArea(String area) {
-        this.area = area;
-    }
+        public Builder() {}
 
-    /**
-     * Sets the operation status of the restaurant.
-     * @param operationStatus the operation status of the restaurant.
-     */
-    public void setOperationStatus(String operationStatus) {
-        this.operationStatus = operationStatus;
-    }
+        /**
+         * Sets the name of the restaurant.
+         * @param restaurantName the name of the restaurant.
+         * @return the Builder object.
+         */
+        public Builder withName(String restaurantName) {
+            this.restaurantName = restaurantName;
+            return this;
+        }
 
-    /**
-     * Sets the opening time of the restaurant.
-     * @param openingTime the opening time of the restaurant.
-     */
-    public void setOpeningTime(String openingTime) {
-        this.openingTime = openingTime;
-    }
+        /**
+         * Sets the description of the restaurant.
+         * @param description the description of the restaurant.
+         * @return the Builder object.
+         */
+        public Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
 
-    /**
-     * Sets the closing time of the restaurant.
-     * @param closingTime the closing time of the restaurant.
-     */
-    public void setClosingTime(String closingTime) {
-        this.closingTime = closingTime;
-    }
+        /**
+         * Sets the name of the Theme Park that the restaurant belongs to.
+         * @param parkName the name of the Theme Park that the restaurant belongs to.
+         * @return the Builder object.
+         */
+        public Builder withParkName(String parkName) {
+            this.parkName = parkName;
+            return this;
+        }
 
-    /**
-     * Sets the vegetarian menu status of the restaurant.
-     * @param servesVegetarian true if the restaurant serves vegetarian food, false if not.
-     */
-    public void setServesVegetarian(boolean servesVegetarian) {
-        this.servesVegetarian = servesVegetarian;
-    }
+        /**
+         * Sets the name of the area that the restaurant belongs to.
+         * @param area the name of the area that the restaurant belongs to.
+         * @return the Builder object.
+         */
+        public Builder withArea(String area) {
+            this.area = area;
+            return this;
+        }
 
-    /**
-     * Sets the vegan menu status of the restaurant.
-     * @param servesVegan true if the restaurant serves vegan food, false if not.
-     */
-    public void setServesVegan(boolean servesVegan) {
-        this.servesVegan = servesVegan;
+        /**
+         * Sets the operation status of the restaurant.
+         * @param operationStatus the operation status of the restaurant.
+         * @return the Builder object.
+         */
+        public Builder withOperationStatus(String operationStatus) {
+            this.operationStatus = operationStatus;
+            return this;
+        }
+
+        /**
+         * Sets the opening time of the restaurant.
+         * @param openingTime the opening time of the restaurant.
+         * @return the Builder object.
+         */
+        public Builder withOpeningTime(String openingTime) {
+            this.openingTime = openingTime;
+            return this;
+        }
+
+        /**
+         * Sets the closing time of the restaurant.
+         * @param closingTime the closing time of the restaurant.
+         * @return the Builder object.
+         */
+        public Builder withClosingTime(String closingTime) {
+            this.closingTime = closingTime;
+            return this;
+        }
+
+        /**
+         * Sets the vegetarian status of the restaurant menu.
+         * @param servesVegetarian true if the restaurant has vegetarian options, false if not.
+         * @return the Builder object.
+         */
+        public Builder servesVegetarian(boolean servesVegetarian) {
+            this.servesVegetarian = servesVegetarian;
+            return this;
+        }
+
+        /**
+         * Sets the vegan status of the restaurant menu.
+         * @param servesVegan true if the restaurant has vegan options, false if not.
+         * @return the Builder object.
+         */
+        public Builder servesVegan(boolean servesVegan) {
+            this.servesVegan = servesVegan;
+            return this;
+        }
+
+        /**
+         * Builds the Restaurant object using the builder.
+         * @return the Restaurant object.
+         */
+        public Restaurant build() {
+            return new Restaurant(this);
+        }
     }
 
     /**
      * Returns the name of the Restaurant.
-     * @return String - the name of the Restaurant.
+     * @return the name of the Restaurant.
      */
     public String getRestaurantName() {
         return restaurantName;
@@ -92,7 +139,7 @@ public class Restaurant {
 
     /**
      * Returns the description of the Restaurant.
-     * @return String - the description of the Restaurant.
+     * @return the description of the Restaurant.
      */
     public String getDescription() {
         return description;
@@ -100,7 +147,7 @@ public class Restaurant {
 
     /**
      * Returns the name of the Theme Park that the Restaurant belongs to.
-     * @return String - the name of the Theme Park that the Restaurant belongs to.
+     * @return the name of the Theme Park that the Restaurant belongs to.
      */
     public String getParkName() {
         return parkName;
@@ -108,7 +155,7 @@ public class Restaurant {
 
     /**
      * Returns the area of the Restaurant.
-     * @return String - the area of the Restaurant.
+     * @return the area of the Restaurant.
      */
     public String getArea() {
         return area;
@@ -116,7 +163,7 @@ public class Restaurant {
 
     /**
      * Returns the operation status of the Restaurant.
-     * @return String - the operation status of the Restaurant.
+     * @return the operation status of the Restaurant.
      */
     public String getOperationStatus() {
         return operationStatus;
@@ -124,7 +171,7 @@ public class Restaurant {
 
     /**
      * Returns the opening time of the Restaurant.
-     * @return String - the opening time of the Restaurant.
+     * @return the opening time of the Restaurant.
      */
     public String getOpeningTime() {
         return openingTime;
@@ -132,7 +179,7 @@ public class Restaurant {
 
     /**
      * Returns the closing time of the Restaurant.
-     * @return String - the closing time of the Restaurant.
+     * @return the closing time of the Restaurant.
      */
     public String getClosingTime() {
         return closingTime;
@@ -140,17 +187,17 @@ public class Restaurant {
 
     /**
      * Returns the vegetarian status of the Restaurant.
-     * @return boolean - true if the Restaurant has vegatarian menu items.
+     * @return true if the Restaurant has vegetarian menu items, false if not.
      */
-    public boolean isVegetarian() {
+    public boolean isServesVegetarian() {
         return servesVegetarian;
     }
 
     /**
      * Returns the vegan status of the Restaurant.
-     * @return boolean - true if the Restaurant has vegan menu items.
+     * @return true if the Restaurant has vegan menu items, false if not.
      */
-    public boolean isVegan() {
+    public boolean isServesVegan() {
         return servesVegan;
     }
 }

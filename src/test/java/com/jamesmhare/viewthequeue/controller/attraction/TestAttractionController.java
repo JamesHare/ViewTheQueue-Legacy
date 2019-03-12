@@ -66,7 +66,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByNameWhenNameValid() throws Exception {
-        mockMvc.perform(get("/attraction-with-name?name=Test Attraction 1")
+        mockMvc.perform(get("/attraction?name=Test Attraction 1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -92,7 +92,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByNameWhenNameInvalid() throws Exception {
-        mockMvc.perform(get("/attraction-with-name?name=Not A Valid Name")
+        mockMvc.perform(get("/attraction?name=Not A Valid Name")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNoContent());
@@ -104,7 +104,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByParkWhenParkNameValid() throws Exception {
-        mockMvc.perform(get("/attractions-in-park?park-name=Test Park")
+        mockMvc.perform(get("/attraction?parkname=Test Park")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -144,7 +144,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByParkWhenParkNameInvalid() throws Exception {
-        mockMvc.perform(get("/attractions-in-park?park-name=Not A Valid Park")
+        mockMvc.perform(get("/attraction?parkname=Not A Valid Park")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNoContent());
@@ -156,7 +156,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByAreaWhenAreaValid() throws Exception {
-        mockMvc.perform(get("/attractions-in-area?area=Test Area")
+        mockMvc.perform(get("/attraction?area=Test Area")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -196,7 +196,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByAreaWhenAreaInvalid() throws Exception {
-        mockMvc.perform(get("/attractions-in-area?area=Not A Valid Area")
+        mockMvc.perform(get("/attraction?area=Not A Valid Area")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNoContent());
@@ -208,7 +208,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByOperationStatusWhenOperationStatusValidAndOpen() throws Exception {
-        mockMvc.perform(get("/attractions-with-status?status=Open")
+        mockMvc.perform(get("/attraction?operationstatus=Open")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -234,7 +234,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByOperationStatusWhenOperationStatusValidAndClosed() throws Exception {
-        mockMvc.perform(get("/attractions-with-status?status=Closed")
+        mockMvc.perform(get("/attraction?operationstatus=Closed")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -260,7 +260,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByOperationStatusWhenOperationStatusInvalid() throws Exception {
-        mockMvc.perform(get("/attractions-with-status?status=Not Valid")
+        mockMvc.perform(get("/attraction?operationstatus=Not Valid")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNoContent());
@@ -273,7 +273,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByWheelchairAccessibilityWhenWheelchairAccessibilityIsValidAndFalse() throws Exception {
-        mockMvc.perform(get("/attractions-with-wheelchair-access?wheelchair-access=false")
+        mockMvc.perform(get("/attraction?wheelchairaccessible=false")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -300,7 +300,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByWheelchairAccessibilityWhenWheelchairAccessibilityIsValidAndTrue() throws Exception {
-        mockMvc.perform(get("/attractions-with-wheelchair-access?wheelchair-access=true")
+        mockMvc.perform(get("/attraction?wheelchairaccessible=true")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -326,7 +326,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByWheelchairAccessibilityWhenWheelchairAccessibilityIsInvalid() throws Exception {
-        mockMvc.perform(get("/attractions-with-wheelchair-access?wheelchair-access=Not Valid")
+        mockMvc.perform(get("/attraction?wheelchairaccessible=Not Valid")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
@@ -338,7 +338,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByExpressLineAvailabilityWhenExpressLineAvailabilityIsValidAndFalse() throws Exception {
-        mockMvc.perform(get("/attractions-with-express?express=false")
+        mockMvc.perform(get("/attraction?expressline=false")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -365,7 +365,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByExpressLineAvailabilityWhenExpressLineAvailabilityIsValidAndTrue() throws Exception {
-        mockMvc.perform(get("/attractions-with-express?express=true")
+        mockMvc.perform(get("/attraction?expressline=true")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -391,7 +391,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByExpressLineAvailabilityWhenExpressLineAvailabilityIsInvalid() throws Exception {
-        mockMvc.perform(get("/attractions-with-express?express=Not Valid")
+        mockMvc.perform(get("/attraction?expressline=Not Valid")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
@@ -403,7 +403,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionBySingleRiderLineAvailabilityWhenSingleRiderLineAvailabilityIsValidAndFalse() throws Exception {
-        mockMvc.perform(get("/attractions-with-single-rider?single-rider=false")
+        mockMvc.perform(get("/attraction?singleriderline=false")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -430,7 +430,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionBySingleRiderLineAvailabilityWhenSingleRiderLineAvailabilityIsValidAndTrue() throws Exception {
-        mockMvc.perform(get("/attractions-with-single-rider?single-rider=true")
+        mockMvc.perform(get("/attraction?singleriderline=true")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -456,7 +456,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionBySingleRiderLineAvailabilityWhenSingleRiderLineAvailabilityIsInvalid() throws Exception {
-        mockMvc.perform(get("/attractions-with-single-rider?single-rider=Not Valid")
+        mockMvc.perform(get("/attraction?singleriderline=Not Valid")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
@@ -467,7 +467,7 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAllAttractions() throws Exception {
-        mockMvc.perform(get("/attractions")
+        mockMvc.perform(get("/attraction")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())

@@ -55,6 +55,13 @@ public class MySQLConnectionProxy implements ConnectionProxy {
     /**
      * {@inheritDoc}
      */
+    public Connection getConnection() {
+        return connection;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public PreparedStatement getPreparedStatement(String pathToSQLFile) throws IOException, SQLException {
         return connection.prepareStatement(new String(Files.readAllBytes(Paths.get(pathToSQLFile))));
     }

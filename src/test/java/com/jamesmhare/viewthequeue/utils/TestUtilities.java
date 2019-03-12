@@ -19,8 +19,8 @@ import java.util.List;
 public class TestUtilities {
 
     private List<Attraction> existingAttractions;
-    private List<Show> existingShows;
     private List<Restaurant> existingRestaurants;
+    private List<Show> existingShows;
     private List<ThemePark> existingThemeParks;
 
     public TestUtilities() {}
@@ -59,24 +59,32 @@ public class TestUtilities {
     }
 
     /**
-     * Saves a copy of the shows that currently exist in the database.
-     */
-    public void saveExistingShows() {
-
-    }
-
-    /**
      * Saves a copy of the restaurants that currently exist in the database.
      */
     public void saveExistingRestaurants() {
-
-    }
-
-    /**
-     * Saves a copy of the theme parks that currently exist in the database.
-     */
-    public void saveExistingThemeParks() {
-
+        existingRestaurants = new ArrayList<>();
+        MySQLConnectionProxy conn = new MySQLConnectionProxy();
+        try {
+            PreparedStatement stmt = conn.getPreparedStatement("src/test/resources/SQLScripts/Utils/Restaurant/SelectAllRestaurants.sql");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Restaurant.Builder restaurantBuilder = new Restaurant.Builder()
+                        .withName(rs.getString("restaurant_name"))
+                        .withDescription(rs.getString("description"))
+                        .withParkName(rs.getString("park_name"))
+                        .withArea(rs.getString("area"))
+                        .withOperationStatus(rs.getString("operation_status"))
+                        .withOpeningTime(rs.getString("opening_time"))
+                        .withClosingTime(rs.getString("closing_time"))
+                        .servesVegetarian(rs.getBoolean("serves_vegetarian"))
+                        .servesVegan(rs.getBoolean("serves_vegan"));
+                existingRestaurants.add(restaurantBuilder.build());
+            }
+        } catch (IOException | SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            conn.closeConnection();
+        }
     }
 
     /**
@@ -111,24 +119,30 @@ public class TestUtilities {
     }
 
     /**
-     * Restores the existing shows to the database.
-     */
-    public void restoreExistingShows() {
-
-    }
-
-    /**
      * Restores the existing restaurants to the database.
      */
     public void restoreExistingRestaurants() {
-
-    }
-
-    /**
-     * Restores the existing theme parks to the database.
-     */
-    public void restoreExistingThemeParks() {
-
+        MySQLConnectionProxy conn = new MySQLConnectionProxy();
+        try {
+            for (Restaurant restaurant : existingRestaurants) {
+                PreparedStatement stmt = conn.getPreparedStatement("src/test/resources/SQLScripts/Utils/Restaurant/InsertRestaurant.sql");
+                stmt.setString(1, restaurant.getRestaurantName());
+                stmt.setString(2, restaurant.getDescription());
+                stmt.setString(3, restaurant.getParkName());
+                stmt.setString(4, restaurant.getArea());
+                stmt.setString(5, restaurant.getOperationStatus());
+                stmt.setString(6, restaurant.getOpeningTime());
+                stmt.setString(7, restaurant.getClosingTime());
+                stmt.setBoolean(8, restaurant.isServesVegetarian());
+                stmt.setBoolean(9, restaurant.isServesVegan());
+                stmt.execute();
+                stmt.close();
+            }
+        } catch (IOException | SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            conn.closeConnection();
+        }
     }
 
     /**
@@ -138,6 +152,21 @@ public class TestUtilities {
         MySQLConnectionProxy conn = new MySQLConnectionProxy();
         try {
             PreparedStatement stmt = conn.getPreparedStatement("src/test/resources/SQLScripts/Utils/Attraction/SetupAttractionData.sql");
+            stmt.execute();
+        } catch (IOException | SQLException exception) {
+            System.out.println(exception.getMessage());
+        } finally {
+            conn.closeConnection();
+        }
+    }
+
+    /**
+     * Populates the restaurant table with test data.
+     */
+    public void populateRestaurantTable() {
+        MySQLConnectionProxy conn = new MySQLConnectionProxy();
+        try {
+            PreparedStatement stmt = conn.getPreparedStatement("src/test/resources/SQLScripts/Utils/Restaurant/SetupRestaurantData.sql");
             stmt.execute();
         } catch (IOException | SQLException exception) {
             System.out.println(exception.getMessage());
@@ -162,12 +191,41 @@ public class TestUtilities {
     }
 
     /**
+     * Drops the restaurant table.
+     */
+    public void dropRestaurantTable() {
+        MySQLConnectionProxy conn = new MySQLConnectionProxy();
+        try {
+            PreparedStatement stmt = conn.getPreparedStatement("src/test/resources/SQLScripts/Utils/Restaurant/DropRestaurantTable.sql");
+            stmt.execute();
+        } catch (IOException | SQLException exception) {
+            exception.printStackTrace();
+        } finally {
+            conn.closeConnection();
+        }
+    }
+
+    /**
      * Creates the attraction table.
      */
     public void createAttractionTable() {
         MySQLConnectionProxy conn = new MySQLConnectionProxy();
         try {
             conn.runDatabaseScript("src/test/resources/SQLScripts/Utils/Attraction/CreateAttractionTable.sql");
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
+            conn.closeConnection();
+        }
+    }
+
+    /**
+     * Creates the restaurant table.
+     */
+    public void createRestaurantTable() {
+        MySQLConnectionProxy conn = new MySQLConnectionProxy();
+        try {
+            conn.runDatabaseScript("src/test/resources/SQLScripts/Utils/Restaurant/CreateRestaurantTable.sql");
         } catch (Exception exception) {
             exception.printStackTrace();
         } finally {

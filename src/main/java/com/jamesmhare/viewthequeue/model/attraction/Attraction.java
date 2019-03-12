@@ -177,7 +177,7 @@ public class Attraction {
 
     /**
      * Returns the name of the attraction.
-     * @return String - the name of the attraction.
+     * @return the name of the attraction.
      */
     public String getAttractionName() {
         return attractionName;
@@ -185,7 +185,7 @@ public class Attraction {
 
     /**
      * Returns the description of the attraction.
-     * @return String - the description of the attraction.
+     * @return the description of the attraction.
      */
     public String getDescription() {
         return description;
@@ -193,7 +193,7 @@ public class Attraction {
 
     /**
      * Returns the name of the Theme Park that the attraction belongs to.
-     * @return String - the name of the Theme Park that the attraction belongs to.
+     * @return the name of the Theme Park that the attraction belongs to.
      */
     public String getParkName() {
         return parkName;
@@ -201,7 +201,7 @@ public class Attraction {
 
     /**
      * Returns the area of the attraction.
-     * @return String - the area of the attraction.
+     * @return the area of the attraction.
      */
     public String getArea() {
         return area;
@@ -209,7 +209,7 @@ public class Attraction {
 
     /**
      * Returns the operation status of the attraction.
-     * @return String - the operation status of the attraction.
+     * @return the operation status of the attraction.
      */
     public String getOperationStatus() {
         return operationStatus;
@@ -217,7 +217,7 @@ public class Attraction {
 
     /**
      * Returns the opening time of the attraction.
-     * @return String - the opening time of the attraction.
+     * @return the opening time of the attraction.
      */
     public String getOpeningTime() {
         return openingTime;
@@ -225,7 +225,7 @@ public class Attraction {
 
     /**
      * Returns the closing time of the attraction.
-     * @return String - the closing time of the attraction.
+     * @return the closing time of the attraction.
      */
     public String getClosingTime() {
         return closingTime;
@@ -233,7 +233,7 @@ public class Attraction {
 
     /**
      * Returns the wait time of the attraction.
-     * @return String - the wait time of the attraction.
+     * @return the wait time of the attraction.
      */
     public int getWaitTime() {
         return waitTime;
@@ -241,7 +241,7 @@ public class Attraction {
 
     /**
      * Returns the maximum height restriction of the attraction in inches.
-     * @return int - the maximum height restriction of the attraction in inches.
+     * @return the maximum height restriction of the attraction in inches.
      */
     public int getMaxHeightRestrictionInches() {
         return maxHeightRestrictionInches;
@@ -249,7 +249,7 @@ public class Attraction {
 
     /**
      * Returns the minimum height restriction of the attraction in inches.
-     * @return int - the minimum height restriction of the attraction in inches.
+     * @return the minimum height restriction of the attraction in inches.
      */
     public int getMinHeightRestrictionInches() {
         return minHeightRestrictionInches;
@@ -257,7 +257,7 @@ public class Attraction {
 
     /**
      * Returns the wheelchair accessibility of the attraction.
-     * @return boolean - true if the attraction is wheelchair accessible.
+     * @return true if the attraction is wheelchair accessible.
      */
     public boolean isWheelchairAccessible() {
         return isWheelchairAccessible;
@@ -265,7 +265,7 @@ public class Attraction {
 
     /**
      * Returns if there is an express line for the attraction or not.
-     * @return boolean - true if there is an express line for the attraction.
+     * @return true if there is an express line for the attraction.
      */
     public boolean isExpressLine() {
         return hasExpressLine;
@@ -273,7 +273,7 @@ public class Attraction {
 
     /**
      * Returns if there is a single rider line for the attraction or not.
-     * @return boolean - true if there is a single rider line for the attraction.
+     * @return true if there is a single rider line for the attraction.
      */
     public boolean isSingleRider() {
         return hasSingleRider;

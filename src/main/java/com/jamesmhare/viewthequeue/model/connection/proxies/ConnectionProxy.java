@@ -1,6 +1,7 @@
 package com.jamesmhare.viewthequeue.model.connection.proxies;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -28,6 +29,12 @@ public interface ConnectionProxy {
      * @throws SQLException
      */
     PreparedStatement getPreparedStatement(String pathToSQLFile) throws IOException, SQLException;
+
+    /**
+     * Returns the connection.
+     * @return the connection.
+     */
+    Connection getConnection();
 
     /**
      * Returns a new PreparedStatement appended with an additional String.

@@ -1,0 +1,2 @@
+INSERT INTO ViewTheQueueDB.restaurants VALUES
+    (?, ?, ?, ?, ?, ?, ?, ?, ?);
