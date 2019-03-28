@@ -21,7 +21,7 @@ public class AttractionQualifier {
     }
 
     /**
-     * Serves as a static builder class to build an Attraction POJO.
+     * Serves as a static builder class to build an AttractionQualifier.
      */
     public static class Builder {
 

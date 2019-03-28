@@ -1,10 +1,10 @@
 package com.jamesmhare.viewthequeue.model.connection.retrievers.mysql;
 
 import com.jamesmhare.viewthequeue.model.connection.proxies.mysql.MySQLConnectionProxy;
+import com.jamesmhare.viewthequeue.model.connection.qualifiers.RestaurantQualifier;
 import com.jamesmhare.viewthequeue.model.connection.retrievers.RestaurantRetriever;
 import com.jamesmhare.viewthequeue.model.restaurant.Restaurant;
 
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,171 +21,53 @@ public class MySQLRestaurantRetriever implements RestaurantRetriever {
     /**
      * {@inheritDoc}
      */
-    public List<Restaurant> searchRestaurantByName(String restaurantName) {
+    public List<Restaurant> searchRestaurants(RestaurantQualifier restaurantQualifier) {
         MySQLConnectionProxy conn = new MySQLConnectionProxy();
         List<Restaurant> restaurants = new ArrayList<>();
+        String query = buildStatement(restaurantQualifier);
         try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveRestaurant.sql", "WHERE restaurant_name = ?");
-            stmt.setString(1, restaurantName);
+            PreparedStatement stmt = conn.getConnection().prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 processRow(rs, restaurants);
             }
-        } catch (IOException | SQLException exception) {
+        } catch (SQLException exception) {
             System.out.println(exception.getMessage());
         } finally {
             conn.closeConnection();
-        }
-        if (restaurants.size() == 0) {
-            System.out.println("Could not retrieve an entry from the database given the restaurant name: " + restaurantName);
-        } else if (restaurants.size() > 1) {
-            restaurants.clear();
-            System.out.println("More than one entry was retrieved from the database given the restaurant name: " + restaurantName);
         }
         return restaurants;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public List<Restaurant> searchRestaurantByThemeParkName(String parkName) {
-        MySQLConnectionProxy conn = new MySQLConnectionProxy();
-        List<Restaurant> restaurants = new ArrayList<>();
-        try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveRestaurant.sql", "WHERE park_name = ?");
-            stmt.setString(1, parkName);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                processRow(rs, restaurants);
-            }
-        } catch (IOException | SQLException exception) {
-            System.out.println(exception.getMessage());
-        } finally {
-            conn.closeConnection();
+    private String buildStatement(RestaurantQualifier restaurantQualifier) {
+        StringBuilder query = new StringBuilder("SELECT * FROM ViewTheQueueDB.Restaurants");
+        if (restaurantQualifier.getRestaurantName() == null) {
+            query.append(" WHERE restaurant_name LIKE '%'");
+        } else {
+            query.append(" WHERE restaurant_name = '" + restaurantQualifier.getRestaurantName() + "'");
         }
-        if (restaurants.size() == 0) {
-            System.out.println("Could not retrieve an entry from the database given the Theme Park name: " + parkName);
+        if (restaurantQualifier.getParkName() == null) {
+            query.append(" AND park_name LIKE '%'");
+        } else {
+            query.append(" AND park_name = '" + restaurantQualifier.getParkName() + "'");
         }
-        return restaurants;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List<Restaurant> searchRestaurantByArea(String area) {
-        MySQLConnectionProxy conn = new MySQLConnectionProxy();
-        List<Restaurant> restaurants = new ArrayList<>();
-        try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveRestaurant.sql", "WHERE area = ?");
-            stmt.setString(1, area);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                processRow(rs, restaurants);
-            }
-        } catch (IOException | SQLException exception) {
-            System.out.println(exception.getMessage());
-        } finally {
-            conn.closeConnection();
+        if (restaurantQualifier.getArea() == null) {
+            query.append(" AND area LIKE '%'");
+        } else {
+            query.append(" AND area = '" + restaurantQualifier.getArea() + "'");
         }
-        if (restaurants.size() == 0) {
-            System.out.println("Could not retrieve an entry from the database given the area name: " + area);
+        if (restaurantQualifier.getOperationStatus() == null) {
+            query.append(" AND operation_status LIKE '%'");
+        } else {
+            query.append(" AND operation_status = '" + restaurantQualifier.getOperationStatus() + "'");
         }
-        return restaurants;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List<Restaurant> searchRestaurantByOperationStatus(String operationStatus) {
-        MySQLConnectionProxy conn = new MySQLConnectionProxy();
-        List<Restaurant> restaurants = new ArrayList<>();
-        try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveRestaurant.sql", "WHERE operation_status = ?");
-            stmt.setString(1, operationStatus);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                processRow(rs, restaurants);
-            }
-        } catch (IOException | SQLException exception) {
-            System.out.println(exception.getMessage());
-        } finally {
-            conn.closeConnection();
+        if (restaurantQualifier.servesVegetarian() != null) {
+            query.append(" AND serves_vegetarian = " + restaurantQualifier.servesVegetarian());
         }
-        if (restaurants.size() == 0) {
-            System.out.println("Could not retrieve an entry from the database given the operation status: " + operationStatus);
+        if (restaurantQualifier.servesVegan() != null) {
+            query.append(" AND serves_vegan = " + restaurantQualifier.servesVegan());
         }
-        return restaurants;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List<Restaurant> searchRestaurantByVegetarianAvailability(boolean servesVegetarian) {
-        MySQLConnectionProxy conn = new MySQLConnectionProxy();
-        List<Restaurant> restaurants = new ArrayList<>();
-        try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveRestaurant.sql", "WHERE serves_vegetarian = ?");
-            stmt.setBoolean(1, servesVegetarian);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                processRow(rs, restaurants);
-            }
-        } catch (IOException | SQLException exception) {
-            System.out.println(exception.getMessage());
-        } finally {
-            conn.closeConnection();
-        }
-        if (restaurants.size() == 0) {
-            System.out.println("Could not retrieve an entry from the database given the vegetarian option: " + servesVegetarian);
-        }
-        return restaurants;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List<Restaurant> searchRestaurantByVeganAvailability(boolean servesVegan) {
-        MySQLConnectionProxy conn = new MySQLConnectionProxy();
-        List<Restaurant> restaurants = new ArrayList<>();
-        try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveRestaurant.sql", "WHERE serves_vegetarian = ?");
-            stmt.setBoolean(1, servesVegan);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                processRow(rs, restaurants);
-            }
-        } catch (IOException | SQLException exception) {
-            System.out.println(exception.getMessage());
-        } finally {
-            conn.closeConnection();
-        }
-        if (restaurants.size() == 0) {
-            System.out.println("Could not retrieve an entry from the database given the vegan option: " + servesVegan);
-        }
-        return restaurants;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public List<Restaurant> retrieveAllRestaurants() {
-        MySQLConnectionProxy conn = new MySQLConnectionProxy();
-        List<Restaurant> restaurants = new ArrayList<>();
-        try {
-            PreparedStatement stmt = conn.getPreparedStatement("src/main/resources/SQLScripts/retrievers/RetrieveRestaurant.sql");
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                processRow(rs, restaurants);
-            }
-        } catch (IOException | SQLException exception) {
-            System.out.println(exception.getMessage());
-        } finally {
-            conn.closeConnection();
-        }
-        if (restaurants.size() == 0) {
-            System.out.println("No restaurants found.");
-        }
-        return restaurants;
+        return query.toString();
     }
 
     private void processRow(ResultSet rs, List<Restaurant> restaurants) {

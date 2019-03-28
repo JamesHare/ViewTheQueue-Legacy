@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS ViewTheQueueDB.restaurants;
+DROP TABLE IF EXISTS ViewTheQueueDB.Restaurants;

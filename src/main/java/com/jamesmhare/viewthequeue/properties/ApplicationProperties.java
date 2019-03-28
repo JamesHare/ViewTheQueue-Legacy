@@ -28,7 +28,7 @@ public class ApplicationProperties {
     public String getProperty(String key) {
         StringBuilder value = new StringBuilder();
         try {
-            input = new FileInputStream("src/main/resources/properties/config.properties");
+            input = new FileInputStream("configuration/config.properties");
             properties.load(input);
             value.append(properties.getProperty(key));
         } catch (IOException exception) {

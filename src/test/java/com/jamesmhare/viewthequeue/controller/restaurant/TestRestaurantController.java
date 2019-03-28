@@ -67,7 +67,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByNameWhenNameValid() throws Exception {
-        mockMvc.perform(get("/restaurant-with-name?name=Test Restaurant 1")
+        mockMvc.perform(get("/restaurant?name=Test Restaurant 1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -89,7 +89,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByNameWhenNameInvalid() throws Exception {
-        mockMvc.perform(get("/restaurant-with-name?name=Not A Valid Name")
+        mockMvc.perform(get("/restaurant?name=Not A Valid Name")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNoContent());
@@ -101,7 +101,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByParkWhenParkNameValid() throws Exception {
-        mockMvc.perform(get("/restaurants-in-park?park-name=Test Park")
+        mockMvc.perform(get("/restaurant?parkname=Test Park")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -133,7 +133,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByParkWhenParkNameInvalid() throws Exception {
-        mockMvc.perform(get("/restaurants-in-park?park-name=Not A Valid Park")
+        mockMvc.perform(get("/restaurant?parkname=Not A Valid Park")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNoContent());
@@ -145,7 +145,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantsByAreaWhenAreaValid() throws Exception {
-        mockMvc.perform(get("/restaurants-in-area?area=Test Area")
+        mockMvc.perform(get("/restaurant?area=Test Area")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -177,7 +177,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantsByAreaWhenAreaInvalid() throws Exception {
-        mockMvc.perform(get("/restaurants-in-area?area=Not A Valid Area")
+        mockMvc.perform(get("/restaurant?area=Not A Valid Area")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNoContent());
@@ -189,7 +189,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByOperationStatusWhenOperationStatusValidAndOpen() throws Exception {
-        mockMvc.perform(get("/restaurants-with-status?status=Open")
+        mockMvc.perform(get("/restaurant?operationstatus=Open")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -211,7 +211,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByOperationStatusWhenOperationStatusValidAndClosed() throws Exception {
-        mockMvc.perform(get("/restaurants-with-status?status=Closed")
+        mockMvc.perform(get("/restaurant?operationstatus=Closed")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -233,7 +233,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByOperationStatusWhenOperationStatusInvalid() throws Exception {
-        mockMvc.perform(get("/restaurants-with-status?status=Not Valid")
+        mockMvc.perform(get("/restaurant?operationstatus=Not Valid")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNoContent());
@@ -246,7 +246,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByVegetarianAvailabilityWhenVegetarianAvailabilityIsValidAndFalse() throws Exception {
-        mockMvc.perform(get("/restaurants-with-vegetarian-options?serves-vegetarian=false")
+        mockMvc.perform(get("/restaurant?servesvegetarian=false")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -269,7 +269,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByVegetarianAvailabilityWhenVegetarianAvailabilityIsValidAndTrue() throws Exception {
-        mockMvc.perform(get("/restaurants-with-vegetarian-options?serves-vegetarian=true")
+        mockMvc.perform(get("/restaurant?servesvegetarian=true")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -291,7 +291,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByVegetarianAvailabilityWhenVegetarianAvailabilityIsInvalid() throws Exception {
-        mockMvc.perform(get("/restaurants-with-vegetarian-options?serves-vegetarian=Not Valid")
+        mockMvc.perform(get("/restaurant?servesvegetarian=Not Valid")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
@@ -303,7 +303,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByVeganAvailabilityWhenVeganAvailabilityIsValidAndFalse() throws Exception {
-        mockMvc.perform(get("/restaurants-with-vegan-options?serves-vegan=false")
+        mockMvc.perform(get("/restaurant?servesvegan=false")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -326,7 +326,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByVeganAvailabilityWhenVeganAvailabilityIsValidAndTrue() throws Exception {
-        mockMvc.perform(get("/restaurants-with-vegan-options?serves-vegan=true")
+        mockMvc.perform(get("/restaurant?servesvegan=true")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -348,7 +348,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByVeganAvailabilityWhenVeganAvailabilityIsInvalid() throws Exception {
-        mockMvc.perform(get("/restaurants-with-vegan-options?serves-vegan=Not Valid")
+        mockMvc.perform(get("/restaurant?servesvegan=Not Valid")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
@@ -359,7 +359,7 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetAllRestaurants() throws Exception {
-        mockMvc.perform(get("/restaurants")
+        mockMvc.perform(get("/restaurant")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())

@@ -12,3 +12,5 @@ addons:
 before_script:
   - echo "USE mysql;\nUPDATE user SET password=PASSWORD('athena') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
 script: mvn clean install
+after_success:
+  - mvn clean test jacoco:report coveralls:report
