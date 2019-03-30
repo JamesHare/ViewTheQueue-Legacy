@@ -11,8 +11,8 @@ import java.util.List;
 public interface RestaurantRetriever {
 
     /**
-     * Searches for an restaurant given an {@code RestaurantQualifier} object.
-     * @param restaurantQualifier an RestaurantQualifier object.
+     * Searches for an restaurant given a {@code RestaurantQualifier} object.
+     * @param restaurantQualifier a RestaurantQualifier object.
      * @return a List of matching restaurants.
      */
     List<Restaurant> searchRestaurants(RestaurantQualifier restaurantQualifier);

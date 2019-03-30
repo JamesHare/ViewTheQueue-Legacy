@@ -1,5 +1,5 @@
 USE ViewTheQueueDB;
-CREATE TABLE Attractions(
+CREATE TABLE attractions(
     attraction_name varchar(60) NOT NULL,
     description varchar(120),
     park_name varchar(32) NOT NULL,

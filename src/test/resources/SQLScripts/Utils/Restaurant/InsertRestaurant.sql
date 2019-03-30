@@ -1,2 +1,2 @@
-INSERT INTO ViewTheQueueDB.Restaurants VALUES
+INSERT INTO ViewTheQueueDB.restaurants VALUES
     (?, ?, ?, ?, ?, ?, ?, ?, ?);

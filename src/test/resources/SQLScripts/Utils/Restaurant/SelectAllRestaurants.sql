@@ -1,1 +1,1 @@
-SELECT * FROM ViewTheQueueDB.Restaurants;
+SELECT * FROM ViewTheQueueDB.restaurants;

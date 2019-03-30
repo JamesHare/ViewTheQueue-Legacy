@@ -1,31 +1,31 @@
-package com.jamesmhare.viewthequeue.model.show;
+package com.jamesmhare.viewthequeue.model.connection.qualifiers;
 
 /**
- * Serves as a class for a Show POJO.
+ * Serves as a way to hold search qualifiers for the Show object.
+ * The controller will build a qualifier with the attributes given at the end point and pass it into the {@code ShowRetriever}
+ * for searching the database.
  */
-public class Show {
+public class ShowQualifier {
 
-    private String showName, description, parkName, area, operationStatus, showTimes;
-    private boolean isWheelchairAccessible, hasExpressLine;
+    private String showName, parkName, area, operationStatus;
+    private Boolean isWheelchairAccessible, hasExpressLine;
 
-    private Show(Builder builder) {
+    private ShowQualifier(Builder builder) {
         this.showName = builder.showName;
-        this.description = builder.description;
         this.parkName = builder.parkName;
         this.area = builder.area;
         this.operationStatus = builder.operationStatus;
-        this.showTimes = builder.showTimes;
         this.isWheelchairAccessible = builder.isWheelchairAccessible;
         this.hasExpressLine = builder.hasExpressLine;
     }
 
     /**
-     * Serves as a static builder class to build a Show POJO.
+     * Serves as a static builder class to build a ShowQualifier.
      */
     public static class Builder {
 
-        private String showName, description, parkName, area, operationStatus, showTimes;
-        private boolean isWheelchairAccessible, hasExpressLine;
+        private String showName, parkName, area, operationStatus;
+        private Boolean isWheelchairAccessible, hasExpressLine;
 
         public Builder() {}
 
@@ -36,16 +36,6 @@ public class Show {
          */
         public Builder withName(String showName) {
             this.showName = showName;
-            return this;
-        }
-
-        /**
-         * Sets the description of the show.
-         * @param description the description of the show.
-         * @return the Builder object.
-         */
-        public Builder withDescription(String description) {
-            this.description = description;
             return this;
         }
 
@@ -80,21 +70,11 @@ public class Show {
         }
 
         /**
-         * Sets the show times of the show.
-         * @param showTimes the show times of the show.
-         * @return the Builder object.
-         */
-        public Builder withShowTimes(String showTimes) {
-            this.showTimes = showTimes;
-            return this;
-        }
-
-        /**
          * Sets the wheelchair accessibility of the show.
          * @param isWheelchairAccessible the wheelchair accessibility of the show.
          * @return the Builder object.
          */
-        public Builder withWheelchairAccessibility(boolean isWheelchairAccessible) {
+        public Builder withWheelchairAccessibility(Boolean isWheelchairAccessible) {
             this.isWheelchairAccessible = isWheelchairAccessible;
             return this;
         }
@@ -104,17 +84,17 @@ public class Show {
          * @param hasExpressLine true if there is an express line, false if there is not.
          * @return the Builder object.
          */
-        public Builder withExpressLine(boolean hasExpressLine) {
+        public Builder withExpressLine(Boolean hasExpressLine) {
             this.hasExpressLine = hasExpressLine;
             return this;
         }
 
         /**
-         * Builds the Show object using the builder.
-         * @return the show object.
+         * Builds the ShowQualifier object using the builder.
+         * @return the ShowQualifier object.
          */
-        public Show build() {
-            return new Show(this);
+        public ShowQualifier build() {
+            return new ShowQualifier(this);
         }
     }
 
@@ -124,14 +104,6 @@ public class Show {
      */
     public String getShowName() {
         return showName;
-    }
-
-    /**
-     * Returns the description of the Show.
-     * @return the description of the Show.
-     */
-    public String getDescription() {
-        return description;
     }
 
     /**
@@ -159,18 +131,10 @@ public class Show {
     }
 
     /**
-     * Returns the show times of the Show.
-     * @return the show times of the Show.
-     */
-    public String getShowTimes() {
-        return showTimes;
-    }
-
-    /**
      * Returns the wheelchair accessibility of the Show.
      * @return true is the Show is wheelchair accessible.
      */
-    public boolean isWheelchairAccessible() {
+    public Boolean isWheelchairAccessible() {
         return isWheelchairAccessible;
     }
 
@@ -178,7 +142,8 @@ public class Show {
      * Returns there is an express line for the Show.
      * @return true if there is an express line for the Show.
      */
-    public boolean isExpressLine() {
+    public Boolean isExpressLine() {
         return hasExpressLine;
     }
+
 }

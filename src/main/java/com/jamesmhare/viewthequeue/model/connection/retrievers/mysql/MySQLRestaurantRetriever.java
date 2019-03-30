@@ -40,7 +40,7 @@ public class MySQLRestaurantRetriever implements RestaurantRetriever {
     }
 
     private String buildStatement(RestaurantQualifier restaurantQualifier) {
-        StringBuilder query = new StringBuilder("SELECT * FROM ViewTheQueueDB.Restaurants");
+        StringBuilder query = new StringBuilder("SELECT * FROM ViewTheQueueDB.restaurants");
         if (restaurantQualifier.getRestaurantName() == null) {
             query.append(" WHERE restaurant_name LIKE '%'");
         } else {

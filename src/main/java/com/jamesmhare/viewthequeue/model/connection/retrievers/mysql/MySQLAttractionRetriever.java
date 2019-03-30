@@ -40,7 +40,7 @@ public class MySQLAttractionRetriever implements AttractionRetriever {
     }
 
     private String buildStatement(AttractionQualifier attractionQualifier) {
-        StringBuilder query = new StringBuilder("SELECT * FROM ViewTheQueueDB.Attractions");
+        StringBuilder query = new StringBuilder("SELECT * FROM ViewTheQueueDB.attractions");
         if (attractionQualifier.getAttractionName() == null) {
             query.append(" WHERE attraction_name LIKE '%'");
         } else {
