@@ -2,6 +2,7 @@ package com.jamesmhare.viewthequeue.controller.attraction;
 
 import com.jamesmhare.viewthequeue.model.attraction.Attraction;
 import com.jamesmhare.viewthequeue.model.connection.qualifiers.AttractionQualifier;
+import com.jamesmhare.viewthequeue.model.connection.retrievers.AttractionRetriever;
 import com.jamesmhare.viewthequeue.model.connection.retrievers.mysql.MySQLAttractionRetriever;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,7 +21,7 @@ import java.util.List;
 @RequestMapping("/attraction")
 public class AttractionController {
 
-    MySQLAttractionRetriever attractionRetriever = new MySQLAttractionRetriever();
+    AttractionRetriever attractionRetriever = new MySQLAttractionRetriever();
 
     /**
      * Returns a JSON with information from the database matching the given parameters. A qualifier

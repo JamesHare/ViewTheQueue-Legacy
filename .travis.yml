@@ -11,7 +11,7 @@ addons:
       - mysql-server
 before_script:
   - echo "USE mysql;\nUPDATE user SET password=PASSWORD('athena') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
-script: travis_wait 20 mvn install -q
+script: travis_wait 20 mvn clean install -DskipTests -q
 after_success:
   - travis_wait 20 mvn clean test jacoco:report coveralls:report -q
 cache:

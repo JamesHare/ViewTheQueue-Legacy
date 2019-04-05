@@ -1,6 +1,6 @@
 package com.jamesmhare.viewthequeue.controller.attraction;
 
-import com.jamesmhare.viewthequeue.utils.TestUtilities;
+import com.jamesmhare.viewthequeue.utils.attraction.AttractionTestUtilities;
 import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,7 +24,7 @@ public class TestAttractionController {
 
     private MockMvc mockMvc;
     private static boolean databasePreviouslyExisted;
-    private static TestUtilities testUtilities;
+    private static AttractionTestUtilities attractionTestUtilities;
 
     @InjectMocks
     private AttractionController attractionController;
@@ -37,26 +37,26 @@ public class TestAttractionController {
 
     @BeforeClass
     public static void setUpOnce() {
-        testUtilities = new TestUtilities();
-        databasePreviouslyExisted = testUtilities.databaseExists();
+        attractionTestUtilities = new AttractionTestUtilities();
+        databasePreviouslyExisted = attractionTestUtilities.databaseExists();
         if (databasePreviouslyExisted) {
-            testUtilities.saveExistingAttractions();
-            testUtilities.dropAttractionTable();
+            attractionTestUtilities.saveExistingAttractions();
+            attractionTestUtilities.dropAttractionTable();
         } else {
-            testUtilities.createDatabase();
+            attractionTestUtilities.createDatabase();
         }
-        testUtilities.createAttractionTable();
-        testUtilities.populateAttractionTable();
+        attractionTestUtilities.createAttractionTable();
+        attractionTestUtilities.populateAttractionTable();
     }
 
     @AfterClass
     public static void tearDownOnce() {
-        testUtilities.dropAttractionTable();
+        attractionTestUtilities.dropAttractionTable();
         if (databasePreviouslyExisted) {
-            testUtilities.createAttractionTable();
-            testUtilities.restoreExistingAttractions();
+            attractionTestUtilities.createAttractionTable();
+            attractionTestUtilities.restoreExistingAttractions();
         } else {
-            testUtilities.dropDatabase();
+            attractionTestUtilities.dropDatabase();
         }
     }
 
@@ -72,7 +72,7 @@ public class TestAttractionController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].attractionName", Matchers.is("Test Attraction 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -104,13 +104,13 @@ public class TestAttractionController {
      */
     @Test
     public void testGetAttractionByParkWhenParkNameValid() throws Exception {
-        mockMvc.perform(get("/attraction?parkname=Test Park")
+        mockMvc.perform(get("/attraction?parkname=Test Park 1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].attractionName", Matchers.is("Test Attraction 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -121,21 +121,7 @@ public class TestAttractionController {
                 .andExpect(jsonPath("$[0].wheelchairAccessible", Matchers.is(false)))
                 .andExpect(jsonPath("$[0].expressLine", Matchers.is(false)))
                 .andExpect(jsonPath("$[0].singleRider", Matchers.is(false)))
-                .andExpect(jsonPath("$[0].*", Matchers.hasSize(13)))
-                .andExpect(jsonPath("$[1].attractionName", Matchers.is("Test Attraction 2")))
-                .andExpect(jsonPath("$[1].description", Matchers.is("Test Description 2")))
-                .andExpect(jsonPath("$[1].parkName", Matchers.is("Test Park")))
-                .andExpect(jsonPath("$[1].area", Matchers.is("Test Area")))
-                .andExpect(jsonPath("$[1].operationStatus", Matchers.is("Closed")))
-                .andExpect(jsonPath("$[1].openingTime", Matchers.nullValue()))
-                .andExpect(jsonPath("$[1].closingTime", Matchers.nullValue()))
-                .andExpect(jsonPath("$[1].waitTime", Matchers.is(0)))
-                .andExpect(jsonPath("$[1].maxHeightRestrictionInches", Matchers.is(0)))
-                .andExpect(jsonPath("$[1].minHeightRestrictionInches", Matchers.is(0)))
-                .andExpect(jsonPath("$[1].wheelchairAccessible", Matchers.is(true)))
-                .andExpect(jsonPath("$[1].expressLine", Matchers.is(true)))
-                .andExpect(jsonPath("$[1].singleRider", Matchers.is(true)))
-                .andExpect(jsonPath("$[1].*", Matchers.hasSize(13)));
+                .andExpect(jsonPath("$[0].*", Matchers.hasSize(13)));
     }
 
     /**
@@ -162,7 +148,7 @@ public class TestAttractionController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].attractionName", Matchers.is("Test Attraction 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -176,7 +162,7 @@ public class TestAttractionController {
                 .andExpect(jsonPath("$[0].*", Matchers.hasSize(13)))
                 .andExpect(jsonPath("$[1].attractionName", Matchers.is("Test Attraction 2")))
                 .andExpect(jsonPath("$[1].description", Matchers.is("Test Description 2")))
-                .andExpect(jsonPath("$[1].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[1].parkName", Matchers.is("Test Park 2")))
                 .andExpect(jsonPath("$[1].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[1].operationStatus", Matchers.is("Closed")))
                 .andExpect(jsonPath("$[1].openingTime", Matchers.nullValue()))
@@ -214,7 +200,7 @@ public class TestAttractionController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].attractionName", Matchers.is("Test Attraction 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -240,7 +226,7 @@ public class TestAttractionController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].attractionName", Matchers.is("Test Attraction 2")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 2")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 2")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Closed")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.nullValue()))
@@ -279,7 +265,7 @@ public class TestAttractionController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].attractionName", Matchers.is("Test Attraction 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -306,7 +292,7 @@ public class TestAttractionController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].attractionName", Matchers.is("Test Attraction 2")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 2")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 2")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Closed")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.nullValue()))
@@ -344,7 +330,7 @@ public class TestAttractionController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].attractionName", Matchers.is("Test Attraction 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -371,7 +357,7 @@ public class TestAttractionController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].attractionName", Matchers.is("Test Attraction 2")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 2")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 2")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Closed")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.nullValue()))
@@ -409,7 +395,7 @@ public class TestAttractionController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].attractionName", Matchers.is("Test Attraction 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -436,7 +422,7 @@ public class TestAttractionController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].attractionName", Matchers.is("Test Attraction 2")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 2")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 2")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Closed")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.nullValue()))
@@ -473,7 +459,7 @@ public class TestAttractionController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].attractionName", Matchers.is("Test Attraction 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -487,7 +473,7 @@ public class TestAttractionController {
                 .andExpect(jsonPath("$[0].*", Matchers.hasSize(13)))
                 .andExpect(jsonPath("$[1].attractionName", Matchers.is("Test Attraction 2")))
                 .andExpect(jsonPath("$[1].description", Matchers.is("Test Description 2")))
-                .andExpect(jsonPath("$[1].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[1].parkName", Matchers.is("Test Park 2")))
                 .andExpect(jsonPath("$[1].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[1].operationStatus", Matchers.is("Closed")))
                 .andExpect(jsonPath("$[1].openingTime", Matchers.nullValue()))

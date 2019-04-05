@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class MySQLShowRetriever implements ShowRetriever {
 
-    public MySQLShowRetriever() {};
+    public MySQLShowRetriever() {}
 
     /**
      * {@inheritDoc}

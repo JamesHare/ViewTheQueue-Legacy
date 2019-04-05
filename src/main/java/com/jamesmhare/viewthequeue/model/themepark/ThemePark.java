@@ -16,75 +16,122 @@ public class ThemePark {
     private List<Show> shows;
     private List<Restaurant> restaurants;
 
-    public ThemePark() {}
-
-    /**
-     * Sets the name of the Theme Park.
-     * @param parkName the name of the Theme Park.
-     */
-    public void setParkName(String parkName) {
-        this.parkName = parkName;
+    private ThemePark(Builder builder) {
+        this.parkName = builder.parkName;
+        this.description = builder.description;
+        this.operationStatus = builder.operationStatus;
+        this.openingTime = builder.openingTime;
+        this.closingTime = builder.closingTime;
+        this.attractions = builder.attractions;
+        this.shows = builder.shows;
+        this.restaurants = builder.restaurants;
     }
 
     /**
-     * Sets the description of the Theme Park.
-     * @param description the description of the Theme Park.
+     * Serves as a static builder class to build a Theme Park POJO.
      */
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public static class Builder {
 
-    /**
-     * Sets the operation status of the Theme Park.
-     * @param operationStatus the operation status of the Theme Park.
-     */
-    public void setOperationStatus(String operationStatus) {
-        this.operationStatus = operationStatus;
-    }
+        private String parkName, description, operationStatus, openingTime, closingTime;
+        private List<Attraction> attractions;
+        private List<Show> shows;
+        private List<Restaurant> restaurants;
 
-    /**
-     * Sets the opening time of the Theme Park.
-     * @param openingTime the opening time of the Theme Park.
-     */
-    public void setOpeningTime(String openingTime) {
-        this.openingTime = openingTime;
-    }
+        public Builder() {}
 
-    /**
-     * Sets the closing time of the Theme Park.
-     * @param closingTime the closing time of the Theme Park.
-     */
-    public void setClosingTime(String closingTime) {
-        this.closingTime = closingTime;
-    }
+        /**
+         * Sets the name of the park.
+         * @param parkName the name of the park.
+         * @return the Builder object.
+         */
+        public Builder withName(String parkName) {
+            this.parkName = parkName;
+            return this;
+        }
 
-    /**
-     * Sets the attractions of the Theme Park.
-     * @param attractions the attractions of the Theme Park.
-     */
-    public void setAttractions(List<Attraction> attractions) {
-        this.attractions = attractions;
-    }
+        /**
+         * Sets the description of the park.
+         * @param description the description of the park.
+         * @return the Builder object.
+         */
+        public Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
 
-    /**
-     * Sets the shows of the Theme Park.
-     * @param shows the shows of the Theme Park.
-     */
-    public void setShows(List<Show> shows) {
-        this.shows = shows;
-    }
+        /**
+         * Sets the operation status of the park.
+         * @param operationStatus the operation status of the park.
+         * @return the Builder object.
+         */
+        public Builder withOperationStatus(String operationStatus) {
+            this.operationStatus = operationStatus;
+            return this;
+        }
 
-    /**
-     * Sets the restaurants of the Theme Park.
-     * @param restaurants the restaurants of the Theme Park.
-     */
-    public void setRestaurants(List<Restaurant> restaurants) {
-        this.restaurants = restaurants;
+        /**
+         * Sets the opening time of the park.
+         * @param openingTime the opening time of the park.
+         * @return the Builder object.
+         */
+        public Builder withOpeningTime(String openingTime) {
+            this.openingTime = openingTime;
+            return this;
+        }
+
+        /**
+         * Sets the closing time of the park.
+         * @param closingTime the closing time of the park.
+         * @return the Builder object.
+         */
+        public Builder withClosingTime(String closingTime) {
+            this.closingTime = closingTime;
+            return this;
+        }
+
+        /**
+         * Sets the attraction POJOs belonging to the park.
+         * @param attractions the attraction POJOs belonging to the park.
+         * @return the Builder object.
+         */
+        public Builder withAttractions(List<Attraction> attractions){
+            this.attractions = attractions;
+            return this;
+        }
+
+        /**
+         * Sets the show POJOs belonging to the park.
+         * @param shows the show POJOs belonging to the park.
+         * @return the Builder object.
+         */
+        public Builder withShows(List<Show> shows){
+            this.shows = shows;
+            return this;
+        }
+
+        /**
+         * Sets the restaurant POJOs belonging to the park.
+         * @param restaurants the restaurant POJOs belonging to the park.
+         * @return the Builder object.
+         */
+        public Builder withRestaurants(List<Restaurant> restaurants){
+            this.restaurants = restaurants;
+            return this;
+        }
+
+        /**
+         * Builds the ThemePark object using the builder.
+         * @return the ThemePark object.
+         */
+        public ThemePark build() {
+            return new ThemePark(this);
+        }
+
     }
 
     /**
      * Returns the name of the Theme Park.
-     * @return String - the name of the Theme Park.
+     * @return the name of the Theme Park.
      */
     public final String getParkName() {
         return parkName;
@@ -92,7 +139,7 @@ public class ThemePark {
 
     /**
      * Returns the description of the Theme Park.
-     * @return String - the description of the Theme Park.
+     * @return the description of the Theme Park.
      */
     public final String getDescription() {
         return description;
@@ -100,7 +147,7 @@ public class ThemePark {
 
     /**
      * Returns the operation status of the Theme Park.
-     * @return String - the operation status of the Theme Park.
+     * @return the operation status of the Theme Park.
      */
     public final String getOperationStatus() {
         return operationStatus;
@@ -108,7 +155,7 @@ public class ThemePark {
 
     /**
      * Returns the opening time of the Theme Park.
-     * @return String - the opening time of the Theme Park.
+     * @return the opening time of the Theme Park.
      */
     public final String getOpeningTime() {
         return openingTime;
@@ -116,7 +163,7 @@ public class ThemePark {
 
     /**
      * Returns the closing time of the Theme Park.
-     * @return String - the closing time of the Theme Park.
+     * @return the closing time of the Theme Park.
      */
     public final String getClosingTime() {
         return closingTime;
@@ -124,7 +171,7 @@ public class ThemePark {
 
     /**
      * Returns the attraction information of the Theme Park.
-     * @return String - the attraction information of the Theme Park.
+     * @return the attraction information of the Theme Park.
      */
     public final List<Attraction> getAttractions() {
         return attractions;
@@ -132,7 +179,7 @@ public class ThemePark {
 
     /**
      * Returns the show information of the Theme Park.
-     * @return String - the show information of the Theme Park.
+     * @return the show information of the Theme Park.
      */
     public List<Show> getShows() {
         return shows;
@@ -140,7 +187,7 @@ public class ThemePark {
 
     /**
      * Returns the restaurant information of the Theme Park.
-     * @return String - the restaurant information of the Theme Park.
+     * @return the restaurant information of the Theme Park.
      */
     public List<Restaurant> getRestaurants() {
         return restaurants;

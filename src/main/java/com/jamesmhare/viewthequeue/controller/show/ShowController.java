@@ -1,6 +1,7 @@
 package com.jamesmhare.viewthequeue.controller.show;
 
 import com.jamesmhare.viewthequeue.model.connection.qualifiers.ShowQualifier;
+import com.jamesmhare.viewthequeue.model.connection.retrievers.ShowRetriever;
 import com.jamesmhare.viewthequeue.model.connection.retrievers.mysql.MySQLShowRetriever;
 import com.jamesmhare.viewthequeue.model.show.Show;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import java.util.List;
 @RequestMapping("/show")
 public class ShowController {
 
-    MySQLShowRetriever showRetriever = new MySQLShowRetriever();
+    ShowRetriever showRetriever = new MySQLShowRetriever();
 
     /**
      * Returns a JSON with information from the database matching the given parameters. A qualifier

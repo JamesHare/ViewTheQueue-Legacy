@@ -109,7 +109,7 @@ for each object.
 *Note: for the purposes of an example, we will be using localhost as the hostname. In reality, this can be
 set up to run on a different host and referenced by that hostname.*
 
-## Attraction
+## Attractions
 
 ### Request Mapping:
 
@@ -117,7 +117,7 @@ set up to run on a different host and referenced by that hostname.*
 
 ### Available Parameters:
 
-*attractionname* - The name of an attraction.
+*name* - The name of an attraction.
 
 *parkname* - The name of the park in which the attraction is located.
 
@@ -125,11 +125,11 @@ set up to run on a different host and referenced by that hostname.*
 
 *operationstatus* - The operation status of the attraction. Can be Open or Closed.
 
-*isWheelchairaccessible* - The wheelchair accessibility of the attraction. Can be true or false.
+*wheelchairaccessible* - The wheelchair accessibility of the attraction. Can be true or false.
 
-*hasexpressline* - The express line availability of the attraction. Can be true or false.
+*expressline* - The express line availability of the attraction. Can be true or false.
 
-*hassingleriderline* - The single rider line availability of the attraction. Can be true or false.
+*singleriderline* - The single rider line availability of the attraction. Can be true or false.
 
 
 ### Examples:
@@ -143,7 +143,7 @@ http://localhost:8080/attraction?parkname=Animal%20World
 ```
 
 
-## Restaurant
+## Restaurants
 
 ### Request Mapping:
 
@@ -151,7 +151,7 @@ http://localhost:8080/attraction?parkname=Animal%20World
 
 ### Available Parameters:
 
-*restaurantname* - The name of a restaurant.
+*name* - The name of a restaurant.
 
 *parkname* - The name of the park in which the restaurant is located.
 
@@ -171,4 +171,58 @@ http://localhost:8080/restaurant?name=The%20Stomping%20Saloon
 http://localhost:8080/restaurant?operationstatus=open&servesvegetarian=true
 
 http://localhost:8080/restaurant?parkname=Animal%20World
+```
+
+
+## Shows
+
+### Request Mapping:
+
+/show
+
+### Available Parameters:
+
+*name* - The name of a restaurant.
+
+*parkname* - The name of the park in which the restaurant is located.
+
+*area* - The name of the area in which the restaurant is located.
+
+*operationstatus* - The operation status of the restaurant. Can be Open or Closed.
+
+*expressline* - The express line availability of the attraction. Can be true or false.
+
+*wheelchairaccessible* - The wheelchair accessibility of the attraction. Can be true or false.
+
+### Examples:
+
+```
+http://localhost:8080/show?name=African%20Jungle%20Festival
+
+http://localhost:8080/show?operationstatus=open&expresline=true
+
+http://localhost:8080/show?parkname=sunset%20studios
+```
+
+
+## Theme Parks
+
+### Request Mapping:
+
+/park
+
+### Available Parameters:
+
+*name* - The name of a restaurant.
+
+*operationstatus* - The operation status of the restaurant. Can be Open or Closed.
+
+### Examples:
+
+```
+http://localhost:8080/park?name=animal%20world
+
+http://localhost:8080/park?operationstatus=open
+
+http://localhost:8080/park?name=animal%20world&operationstatus=open
 ```

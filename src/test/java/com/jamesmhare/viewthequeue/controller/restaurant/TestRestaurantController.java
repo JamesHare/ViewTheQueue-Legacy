@@ -1,6 +1,6 @@
 package com.jamesmhare.viewthequeue.controller.restaurant;
 
-import com.jamesmhare.viewthequeue.utils.TestUtilities;
+import com.jamesmhare.viewthequeue.utils.restaurant.RestaurantTestUtilities;
 import org.hamcrest.Matchers;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Serves as a test class for the {@link RestaurantController}.
@@ -25,7 +24,7 @@ public class TestRestaurantController {
 
     private MockMvc mockMvc;
     private static boolean databasePreviouslyExisted;
-    private static TestUtilities testUtilities;
+    private static RestaurantTestUtilities restaurantTestUtilities;
 
     @InjectMocks
     private RestaurantController restaurantController;
@@ -38,26 +37,26 @@ public class TestRestaurantController {
 
     @BeforeClass
     public static void setUpOnce() {
-        testUtilities = new TestUtilities();
-        databasePreviouslyExisted = testUtilities.databaseExists();
+        restaurantTestUtilities = new RestaurantTestUtilities();
+        databasePreviouslyExisted = restaurantTestUtilities.databaseExists();
         if (databasePreviouslyExisted) {
-            testUtilities.saveExistingRestaurants();
-            testUtilities.dropRestaurantTable();
+            restaurantTestUtilities.saveExistingRestaurants();
+            restaurantTestUtilities.dropRestaurantTable();
         } else {
-            testUtilities.createDatabase();
+            restaurantTestUtilities.createDatabase();
         }
-        testUtilities.createRestaurantTable();
-        testUtilities.populateRestaurantTable();
+        restaurantTestUtilities.createRestaurantTable();
+        restaurantTestUtilities.populateRestaurantTable();
     }
 
     @AfterClass
     public static void tearDownOnce() {
-        testUtilities.dropRestaurantTable();
+        restaurantTestUtilities.dropRestaurantTable();
         if (databasePreviouslyExisted) {
-            testUtilities.createRestaurantTable();
-            testUtilities.restoreExistingRestaurants();
+            restaurantTestUtilities.createRestaurantTable();
+            restaurantTestUtilities.restoreExistingRestaurants();
         } else {
-            testUtilities.dropDatabase();
+            restaurantTestUtilities.dropDatabase();
         }
     }
 
@@ -73,7 +72,7 @@ public class TestRestaurantController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].restaurantName", Matchers.is("Test Restaurant 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -101,30 +100,20 @@ public class TestRestaurantController {
      */
     @Test
     public void testGetRestaurantByParkWhenParkNameValid() throws Exception {
-        mockMvc.perform(get("/restaurant?parkname=Test Park")
+        mockMvc.perform(get("/restaurant?parkname=Test Park 1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].restaurantName", Matchers.is("Test Restaurant 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
                 .andExpect(jsonPath("$[0].closingTime", Matchers.is("22:00:00")))
                 .andExpect(jsonPath("$[0].servesVegetarian", Matchers.is(false)))
                 .andExpect(jsonPath("$[0].servesVegan", Matchers.is(false)))
-                .andExpect(jsonPath("$[0].*", Matchers.hasSize(9)))
-                .andExpect(jsonPath("$[1].restaurantName", Matchers.is("Test Restaurant 2")))
-                .andExpect(jsonPath("$[1].description", Matchers.is("Test Description 2")))
-                .andExpect(jsonPath("$[1].parkName", Matchers.is("Test Park")))
-                .andExpect(jsonPath("$[1].area", Matchers.is("Test Area")))
-                .andExpect(jsonPath("$[1].operationStatus", Matchers.is("Closed")))
-                .andExpect(jsonPath("$[1].openingTime", Matchers.nullValue()))
-                .andExpect(jsonPath("$[1].closingTime", Matchers.nullValue()))
-                .andExpect(jsonPath("$[1].servesVegetarian", Matchers.is(true)))
-                .andExpect(jsonPath("$[1].servesVegan", Matchers.is(true)))
-                .andExpect(jsonPath("$[1].*", Matchers.hasSize(9)));
+                .andExpect(jsonPath("$[0].*", Matchers.hasSize(9)));
     }
 
     /**
@@ -151,7 +140,7 @@ public class TestRestaurantController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].restaurantName", Matchers.is("Test Restaurant 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -161,7 +150,7 @@ public class TestRestaurantController {
                 .andExpect(jsonPath("$[0].*", Matchers.hasSize(9)))
                 .andExpect(jsonPath("$[1].restaurantName", Matchers.is("Test Restaurant 2")))
                 .andExpect(jsonPath("$[1].description", Matchers.is("Test Description 2")))
-                .andExpect(jsonPath("$[1].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[1].parkName", Matchers.is("Test Park 2")))
                 .andExpect(jsonPath("$[1].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[1].operationStatus", Matchers.is("Closed")))
                 .andExpect(jsonPath("$[1].openingTime", Matchers.nullValue()))
@@ -195,7 +184,7 @@ public class TestRestaurantController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].restaurantName", Matchers.is("Test Restaurant 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -217,7 +206,7 @@ public class TestRestaurantController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].restaurantName", Matchers.is("Test Restaurant 2")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 2")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 2")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Closed")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.nullValue()))
@@ -252,7 +241,7 @@ public class TestRestaurantController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].restaurantName", Matchers.is("Test Restaurant 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -275,7 +264,7 @@ public class TestRestaurantController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].restaurantName", Matchers.is("Test Restaurant 2")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 2")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 2")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Closed")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.nullValue()))
@@ -309,7 +298,7 @@ public class TestRestaurantController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].restaurantName", Matchers.is("Test Restaurant 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -332,7 +321,7 @@ public class TestRestaurantController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].restaurantName", Matchers.is("Test Restaurant 2")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 2")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 2")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Closed")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.nullValue()))
@@ -365,7 +354,7 @@ public class TestRestaurantController {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].restaurantName", Matchers.is("Test Restaurant 1")))
                 .andExpect(jsonPath("$[0].description", Matchers.is("Test Description 1")))
-                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[0].parkName", Matchers.is("Test Park 1")))
                 .andExpect(jsonPath("$[0].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[0].operationStatus", Matchers.is("Open")))
                 .andExpect(jsonPath("$[0].openingTime", Matchers.is("08:00:00")))
@@ -375,7 +364,7 @@ public class TestRestaurantController {
                 .andExpect(jsonPath("$[0].*", Matchers.hasSize(9)))
                 .andExpect(jsonPath("$[1].restaurantName", Matchers.is("Test Restaurant 2")))
                 .andExpect(jsonPath("$[1].description", Matchers.is("Test Description 2")))
-                .andExpect(jsonPath("$[1].parkName", Matchers.is("Test Park")))
+                .andExpect(jsonPath("$[1].parkName", Matchers.is("Test Park 2")))
                 .andExpect(jsonPath("$[1].area", Matchers.is("Test Area")))
                 .andExpect(jsonPath("$[1].operationStatus", Matchers.is("Closed")))
                 .andExpect(jsonPath("$[1].openingTime", Matchers.nullValue()))

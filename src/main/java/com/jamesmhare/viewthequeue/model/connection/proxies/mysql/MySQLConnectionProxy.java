@@ -4,7 +4,9 @@ import com.ibatis.common.jdbc.ScriptRunner;
 import com.jamesmhare.viewthequeue.model.connection.proxies.ConnectionProxy;
 import com.jamesmhare.viewthequeue.properties.ApplicationProperties;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
@@ -64,13 +66,6 @@ public class MySQLConnectionProxy implements ConnectionProxy {
      */
     public PreparedStatement getPreparedStatement(String pathToSQLFile) throws IOException, SQLException {
         return connection.prepareStatement(new String(Files.readAllBytes(Paths.get(pathToSQLFile))));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public PreparedStatement getPreparedStatement(String pathToSQLFile, String ammendment) throws IOException, SQLException {
-        return connection.prepareStatement(new String(Files.readAllBytes(Paths.get(pathToSQLFile))) + " " + ammendment);
     }
 
     /**

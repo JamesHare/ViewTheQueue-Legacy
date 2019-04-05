@@ -1,6 +1,7 @@
 package com.jamesmhare.viewthequeue.controller.restaurant;
 
 import com.jamesmhare.viewthequeue.model.connection.qualifiers.RestaurantQualifier;
+import com.jamesmhare.viewthequeue.model.connection.retrievers.RestaurantRetriever;
 import com.jamesmhare.viewthequeue.model.connection.retrievers.mysql.MySQLRestaurantRetriever;
 import com.jamesmhare.viewthequeue.model.restaurant.Restaurant;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import java.util.List;
 @RequestMapping("/restaurant")
 public class RestaurantController {
 
-    MySQLRestaurantRetriever restaurantRetriever = new MySQLRestaurantRetriever();
+    RestaurantRetriever restaurantRetriever = new MySQLRestaurantRetriever();
 
     /**
      *

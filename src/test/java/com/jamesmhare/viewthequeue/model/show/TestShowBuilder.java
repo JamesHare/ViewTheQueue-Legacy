@@ -67,7 +67,7 @@ public class TestShowBuilder {
     }
 
     /**
-     * Tests that the {@link Show.Builder} creates an Show with wheelchair access.
+     * Tests that the {@link Show.Builder} creates a Show with wheelchair access.
      */
     @Test
     public void testShowBuilderWithWheelchairAccess() {
@@ -78,7 +78,7 @@ public class TestShowBuilder {
     }
 
     /**
-     * Tests that the {@link Show.Builder} creates an Show without wheelchair access.
+     * Tests that the {@link Show.Builder} creates a Show without wheelchair access.
      */
     @Test
     public void testShowBuilderWithoutWheelchairAccess() {
@@ -89,7 +89,7 @@ public class TestShowBuilder {
     }
 
     /**
-     * Tests that the {@link Show.Builder} creates an Show with express line.
+     * Tests that the {@link Show.Builder} creates a Show with express line.
      */
     @Test
     public void testShowBuilderWithExpressLine() {
@@ -100,7 +100,7 @@ public class TestShowBuilder {
     }
 
     /**
-     * Tests that the {@link Show.Builder} creates an Show without express line.
+     * Tests that the {@link Show.Builder} creates a Show without express line.
      */
     @Test
     public void testShowBuilderWithoutExpressLine() {
@@ -122,7 +122,7 @@ public class TestShowBuilder {
     }
 
     /**
-     * Tests that the {@link Show.Builder} creates an Show with no attributes given.
+     * Tests that the {@link Show.Builder} creates a Show with no attributes given.
      */
     @Test
     public void testShowBuilderWithNoAttributesGiven() {
