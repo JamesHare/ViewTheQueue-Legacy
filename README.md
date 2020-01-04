@@ -1,8 +1,6 @@
 # ViewTheQueue
 A REST service for getting wait times and other information about Attractions, Restaurants and Shows at a Theme Park Resort.
 
-Master: [![Build Status](https://travis-ci.com/JamesHare/ViewTheQueue.svg?branch=master)](https://travis-ci.com/JamesHare/ViewTheQueue)
-
 Code Coverage: [![Coverage Status](https://coveralls.io/repos/github/JamesHare/ViewTheQueue/badge.svg)](https://coveralls.io/github/JamesHare/ViewTheQueue)
 
 # Author
